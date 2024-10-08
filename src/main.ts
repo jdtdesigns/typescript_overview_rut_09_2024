@@ -1,9 +1,20 @@
-const noteForm = document.querySelector('#note-form');
+import addNote from './lib/addNote';
+import outputNotes from './lib/outputNotes';
+import deleteNote from './lib/deleteNote';
 
-function addNote(event: Event) {
-  event.preventDefault();
+const noteForm = document.querySelector<HTMLFormElement>('#note-form');
+const noteOutput = document.querySelector<HTMLElement>('#note-output');
 
-  console.log('submit')
-}
+outputNotes();
+noteForm?.addEventListener('submit', addNote);
+noteOutput?.addEventListener('click', (event: Event) => {
+  const el = event?.target as HTMLElement;
 
-noteForm?.addEventListener('click', addNote);
+  if (el.tagName === 'BUTTON') {
+    const index = el.dataset.index || '';
+    
+    deleteNote(index);
+  }
+});
+
+
